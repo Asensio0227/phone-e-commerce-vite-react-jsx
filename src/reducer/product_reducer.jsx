@@ -9,7 +9,6 @@ export const reduce = (state, action) => {
   }
   if (action.type === "OPEN_MODAL") {
     const product = state.products.find(item => item.id === action.payload);
-    console.log('open modal')
     
     return {
       ...state,
@@ -19,7 +18,6 @@ export const reduce = (state, action) => {
   }
   if (action.type === "PRODUCT_DETAILS") {
     const product = state.products.find(item => item.id === action.payload);
-    console.log(detailProduct)
     return {
       ...state,
       detailProduct: product
@@ -106,17 +104,14 @@ export const reduce = (state, action) => {
   if (action.type === "COUNT_CART_TOTALS") {
     let subTotal = 0;
     state.cart.map((item) => subTotal += item.price * item.count);
-    console.log(subTotal);
 
     const { cartTax, cartTotal, cartSubTotal } = state.cart.reduce((acc, curr) => { 
       const { price, count } = curr;
       const tempTax = subTotal * 0.1;
       const tax = parseFloat(tempTax.toFixed(2));
       acc.cartTax = tax;
-      // acc.cartSubtotal += subTotal;
       acc.cartTotal = subTotal + tax
 
-      console.log(acc.cartSubTotal);
       return acc 
     }, {
       cartSubTotal:0,

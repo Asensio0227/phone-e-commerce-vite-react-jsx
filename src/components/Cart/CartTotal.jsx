@@ -2,7 +2,9 @@ import React from 'react'
 // import PayPalButton from "./PayPalButton";
 import { Link} from "react-router-dom";
 import { useGlobalContext } from "../../context/product_context";
-import { PayPalButtons,PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
+
+const client_ID = import.meta.env.VITE_APP_PAYPAL_CLIENT_ID;
 
 const CartTotal = () => {
   const {
@@ -49,7 +51,7 @@ const CartTotal = () => {
                 </h5>
                 <PayPalScriptProvider
                   options={{
-                    "client-id": "AVASAWK54BBh91XbfnJ89YoQFWLljcIfH_LztoFFtkHYwkpzpx_tSQXOmjUNigKc4nWMz1XhD3RHTIq-",
+                    "client-id":client_ID,
                      components: "buttons",
                     currency: "USD"
                 }}

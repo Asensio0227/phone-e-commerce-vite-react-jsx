@@ -45,7 +45,6 @@ const ProductProvider = ({children}) => {
 
   const openModal = (id) => {
     dispatch({ type: "OPEN_MODAL", payload: id });
-    console.log(state)
   };
 
   const closeModal = () => {
