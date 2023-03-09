@@ -1,7 +1,8 @@
 import React from 'react'
-import PayPalButton from "./PayPalButton";
-import { Link, useNavigate } from "react-router-dom";
+// import PayPalButton from "./PayPalButton";
+import { Link} from "react-router-dom";
 import { useGlobalContext } from "../../context/product_context";
+import { PayPalButtons,PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 const CartTotal = () => {
   const {
@@ -11,7 +12,6 @@ const CartTotal = () => {
     cart,
     clearCart
   } = useGlobalContext();
-  const navigate = useNavigate();
   const emptyCart = cart.length === 0 ? true : false;
 
   return (
@@ -47,6 +47,33 @@ const CartTotal = () => {
                   </span> {" "}
                   <strong>$ {cartTotal}</strong>
                 </h5>
+                <PayPalScriptProvider
+                  options={{
+                    "client-id": "AVASAWK54BBh91XbfnJ89YoQFWLljcIfH_LztoFFtkHYwkpzpx_tSQXOmjUNigKc4nWMz1XhD3RHTIq-",
+                     components: "buttons",
+                    currency: "USD"
+                }}
+                >
+                  <PayPalButtons
+                    createOrder={(data, actions) => {
+                      return actions.order.create({
+                        purchase_units: [
+                          {
+                            amount: {
+                              value: cartTotal
+                            }
+                          }
+                        ]
+                      })
+                    }}
+                    onApprove={(data, actions) => {
+                      return actions.order.capture().then(function (details) {
+                        alert("Transation completed by " + details.payer.name.given_name)
+                      })
+                    }}
+                    currency={"USD"}
+                  />
+                </PayPalScriptProvider>
               </div>
             </div>
           </div>
